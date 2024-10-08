@@ -33,10 +33,14 @@
         <section class="items-section">
             <div class="container items-container">
                 <h2>Receipt Items</h2>
-                <button class="primary-button" onclick="addManualItem()">Add Item Manually</button>
+                <div class="button-container">
+                    <button class="button primary-button" onclick="addManualItem()">Add Item Manually</button>
+                    <button class="button secondary-button" onclick="clearAllItems()">Clear All Items</button>
+                </div>
                 <div id="historyContainer" class="history-container">
                     <ul id="itemsList"></ul>
                 </div>
+                <div id="pagination" class="pagination-container"></div>
             </div>
         </section>
     </main>

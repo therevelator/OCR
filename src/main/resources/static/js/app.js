@@ -1254,3 +1254,57 @@ function editReceiptHistoryEntry(index) {
         }
     });
 }
+
+window.addManualItem = function() {
+    Swal.fire({
+        title: 'Add Item Manually',
+        html: `
+            <input type="text" id="manualProductName" class="swal2-input" placeholder="Product Name">
+            <input type="number" id="manualPrice" class="swal2-input" placeholder="Price">
+            <input type="text" id="manualStore" class="swal2-input" placeholder="Store">
+            <input type="text" id="manualCategory" class="swal2-input" placeholder="Category (optional)">
+            <input type="date" id="manualDate" class="swal2-input">
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Add',
+        preConfirm: () => {
+            return {
+                product_name: document.getElementById('manualProductName').value,
+                price: parseFloat(document.getElementById('manualPrice').value),
+                store: document.getElementById('manualStore').value,
+                category: document.getElementById('manualCategory').value || null,
+                date: document.getElementById('manualDate').value
+            };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const { product_name, price, store, category, date } = result.value;
+            if (product_name && price && store && date) {
+                const receiptHistory = JSON.parse(localStorage.getItem('receiptHistory')) || [];
+                let existingReceipt = receiptHistory.find(r => r.store === store && r.date === date);
+                
+                if (existingReceipt) {
+                    existingReceipt.purchases.push({ product_name, price });
+                    existingReceipt.total = existingReceipt.purchases.reduce((sum, item) => sum + item.price, 0);
+                    if (category && !existingReceipt.category) {
+                        existingReceipt.category = category;
+                    }
+                } else {
+                    receiptHistory.push({
+                        store,
+                        category,
+                        date,
+                        total: price,
+                        purchases: [{ product_name, price }]
+                    });
+                }
+                
+                localStorage.setItem('receiptHistory', JSON.stringify(receiptHistory));
+                updateHistoryDisplay();
+                Swal.fire('Added!', 'The item has been added to the receipt history.', 'success');
+            } else {
+                Swal.fire('Error', 'Please fill in all required fields.', 'error');
+            }
+        }
+    });
+};
