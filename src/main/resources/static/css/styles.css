@@ -1,0 +1,1029 @@
+/* styles.css */
+/* Input Fields */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Login Form */
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); /* Adjust based on navbar height */
+}
+
+.login-container {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* CSS Variables */
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #50E3C2;
+    --accent-color: #9013FE;
+    --text-color: #4A4A4A;
+    --background-color: #F5F7FA;
+    --white: #FFFFFF;
+    --light-gray: #D8D8D8;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #007bff;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin-left: 20px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #007bff;
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #333;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu li {
+        text-align: center;
+        margin: 0;
+        padding: 10px 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+    }
+
+    .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #fff;
+        margin: 5px auto;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--white);
+    padding: 100px 0;
+    text-align: center; /* Center all text */
+}
+
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px; /* Adjust this value as needed */
+    margin: 0 auto;
+    padding: 0 20px; /* Add some padding for smaller screens */
+}
+
+.hero-text {
+    width: 100%;
+}
+
+.hero-text h2 {
+    font-size: 2.5rem; /* Responsive font size */
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 1.25rem; /* Responsive font size */
+    margin-bottom: 30px;
+}
+
+.hero-text .primary-button {
+    background-color: var(--white);
+    color: var(--primary-color);
+    padding: 15px 30px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.hero-text .primary-button:hover {
+    background-color: var(--light-gray);
+    transform: translateY(-3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+
+    .hero-text h2 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .hero-text .primary-button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Sections */
+section {
+    padding: 80px 0;
+}
+
+section h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 60px;
+    color: var(--text-color);
+}
+
+/* Upload Section */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-box {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.upload-box input[type="file"] {
+    display: none;
+}
+
+.upload-area {
+    border: 2px dashed var(--light-gray);
+    border-radius: 15px;
+    padding: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-area:hover {
+    background-color: var(--light-gray);
+}
+
+.upload-area i {
+    font-size: 50px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.upload-area p {
+    font-size: 18px;
+}
+
+.upload-box .primary-button {
+    margin-top: 30px;
+    width: 100%;
+}
+
+/* Preview Container */
+.preview-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.preview-container h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Result Section */
+.result-container {
+    text-align: center;
+}
+
+#totalAmount {
+    font-size: 48px;
+    color: var(--accent-color);
+    margin-top: 20px;
+}
+
+/* History Section */
+.history-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#historyContainer {
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#historyList {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#historyList li {
+    font-size: 18px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: var(--background-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#historyList li:last-child {
+    margin-bottom: 0;
+}
+
+#historyList li .amount {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+#historyList li .date {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.delete-button {
+    background-color: #ff4d4d;
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #ff3333;
+    transform: translateY(-2px);
+}
+
+.clear-button {
+    margin-top: 20px;
+    background-color: #ff4d4d;
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.clear-button:hover {
+    background-color: #ff3333;
+    transform: translateY(-3px);
+}
+
+/* Summary Section */
+.summary-section {
+    padding: 60px 0;
+    background-color: var(--background-color);
+}
+
+.summary-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.summary-container h2 {
+    font-size: 28px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+#overallTotalAmount {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(74, 144, 226, 0.1);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.currency-selector {
+    margin-top: 20px;
+}
+
+.currency-selector label {
+    display: block;
+    font-size: 16px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+#currencySelect {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    background-color: var(--white);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#currencySelect:hover, #currencySelect:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* Dark mode styles */
+body.dark-mode .summary-container {
+    background-color: var(--white);
+}
+
+body.dark-mode #overallTotalAmount {
+    background-color: rgba(74, 144, 226, 0.2);
+}
+
+body.dark-mode #currencySelect {
+    background-color: #333;
+    color: var(--text-color);
+    border-color: #555;
+}
+
+body.dark-mode #currencySelect:hover, body.dark-mode #currencySelect:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer p {
+    color: var(--light-gray);
+    font-size: 14px;
+}
+
+/* Buttons */
+.primary-button, .clear-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%; /* Make sure all buttons have full width */
+    max-width: 600px; /* Match the max-width of the upload box */
+    margin: 20px auto; /* Center the button and add some vertical spacing */
+    display: block; /* Change to block to allow margin auto to work */
+}
+
+.primary-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.primary-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.clear-button {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+.clear-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image img {
+        width: 100%;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .nav-container {
+        justify-content: space-between;
+    }
+
+    .logo {
+        flex-grow: 1;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-text h2 {
+        font-size: 32px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    #totalAmount, #overallTotalAmount {
+        font-size: 30px;
+    }
+
+    .primary-button, .clear-button {
+        font-size: 16px;
+        padding: 12px 25px;
+    }
+
+    #historyList li {
+        font-size: 18px;
+    }
+}
+
+/* Hidden Class */
+.hidden {
+    display: none;
+}
+
+/* Dashboard Section */
+.dashboard-section {
+    padding: 80px 0;
+    background-color: var(--background-color);
+}
+
+.dashboard-container {
+    text-align: center;
+}
+
+.graphs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.chart-container h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+/* Currency Selector */
+.currency-selector {
+    margin-top: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.currency-selector label {
+    margin-right: 10px;
+    color: var(--text-color);
+}
+
+.currency-selector select {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.currency-selector select option {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+.menu-content {
+    display: none;
+}
+
+.menu-content.show {
+    display: block;
+}
+.small-preview {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    --background-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --white: #2a2a2a;
+    --light-gray: #444;
+    --border-color: #555;
+}
+
+body.dark-mode .navbar {
+    background-color: #222;
+}
+
+body.dark-mode .hero-section {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+body.dark-mode .upload-area {
+    background-color: #333;
+    border-color: #555;
+}
+
+body.dark-mode .chart-container {
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .currency-selector select {
+    background-color: #333;
+    color: var(--text-color);
+}
+
+body.dark-mode .footer {
+    background-color: #222;
+}
+
+body.dark-mode .primary-button,
+body.dark-mode .clear-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+body.dark-mode .form-input {
+    background-color: #333;
+    color: var(--text-color);
+    border-color: #555;
+}
+
+.swal-custom-input {
+    display: block !important;
+    margin: 20px auto !important;
+    max-width: 80% !important;
+    text-align: center !important;
+}
+
+.swal-custom-popup {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.swal-custom-content {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.delete-btn {
+    background-color: #ff4d4d; /* Red background */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow under the button */
+}
+
+.delete-btn:hover {
+    background-color: #ff3333; /* Darker red on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+/* For dark mode */
+body.dark-mode .delete-btn {
+    background-color: #ff6666; /* Lighter red for dark mode */
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .delete-btn:hover {
+    background-color: #ff4d4d;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Manual Entry Section */
+.manual-entry-section {
+    padding: 80px 0;
+    background-color: var(--background-color);
+}
+
+.manual-entry-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.manual-entry-form {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.manual-entry-form .form-group {
+    margin-bottom: 20px;
+}
+
+.manual-entry-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.manual-entry-form .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.manual-entry-form .primary-button {
+    width: 100%;
+    margin-top: auto;
+}
+
+/* Dark mode styles for manual entry */
+body.dark-mode .manual-entry-form {
+    background-color: var(--white);
+}
+
+body.dark-mode .manual-entry-form .form-input {
+    background-color: #333;
+    color: var(--text-color);
+    border-color: #555;
+}
+
+#storePeriodSelect {
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.dark-mode #storePeriodSelect {
+    background-color: #333;
+    color: var(--text-color);
+    border-color: #555;
+}
+
+/* Container for each item entry */
+.item-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Common button styles */
+.button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+/* Edit button specific styles */
+.edit-button {
+    background-color: #3498db; /* Light blue color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Delete button specific styles */
+.delete-button {
+    background-color: #ff4d4d; /* Red color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button:hover {
+    background-color: #ff3333; /* Darker red on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Button container for spacing */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.button-container button {
+    margin-left: 5px; /* Add 5px spacing between buttons */
+}
+
+/* For dark mode */
+body.dark-mode .edit-button {
+    background-color: #5dade2; /* Lighter blue for dark mode */
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .edit-button:hover {
+    background-color: #3498db;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .delete-button {
+    background-color: #ff6666; /* Lighter red for dark mode */
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .delete-button:hover {
+    background-color: #ff4d4d;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+.section-divider {
+    height: 2px;
+    background-color: #e0e0e0;
+    margin: 40px 0;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.history-item:hover {
+    background-color: #f5f5f5;
+}
+
+.history-content {
+    flex-grow: 1;
+}
+
+.history-content p {
+    margin: 5px 0;
+}
+
+.history-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #3498db; /* Light blue color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-btn:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.delete-btn {
+    background-color: #ff4d4d; /* Red color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn:hover {
+    background-color: #ff3333; /* Darker red on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* For dark mode */
+body.dark-mode .edit-btn {
+    background-color: #5dade2; /* Lighter blue for dark mode */
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .edit-btn:hover {
+    background-color: #3498db;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .delete-btn {
+    background-color: #ff6666; /* Lighter red for dark mode */
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .delete-btn:hover {
+    background-color: #ff4d4d;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
