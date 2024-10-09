@@ -81,36 +81,219 @@ document.getElementById('imageInput').addEventListener('change', function() {
     }
 });
 
-// Function to process the uploaded image
-function processImage() {
-    const imageInput = document.getElementById('imageInput').files[0];
-    if (!imageInput) {
-        Swal.fire({
-            title: 'Oops!',
-            text: 'Please upload an image',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-            customClass: {
-                popup: 'swal-custom-popup',
-                title: 'swal-custom-title',
-                content: 'swal-custom-content',
-                confirmButton: 'swal-custom-confirm-button'
-            }
-        });
+async function processImage() {
+    const imageInput = document.getElementById('imageInput');
+    const file = imageInput.files[0];
+
+    if (!file) {
+        Swal.fire('Error', 'Please select an image file.', 'error');
         return;
     }
 
-    // Check the image size
-    const imageSizeMB = imageInput.size / (1024 * 1024); // Convert size to MB
-    if (imageSizeMB > 5) {
-    //     // Resize the image if larger than 5 MB
-    //     resizeImage(imageInput, 1024, 768, (resizedImage) => {
-    //         uploadImageToMyApi(resizedImage);
-    //     });
-    } else {
-        // If image size is within limit, process it directly
-        uploadImageToMyApi(imageInput);
+    try {
+        // Show processing modal
+        Swal.fire({
+            title: 'Processing...',
+            text: 'Please wait while we analyze the image.',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        const text = await performOCR(file);
+        const response = await sendToOllamaController(text);
+        
+        // Close the processing modal
+        Swal.close();
+        
+        // Handle the response
+        handleOllamaResponse(response);
+    } catch (error) {
+        console.error('Error processing image:', error);
+        Swal.fire('Error', 'Error processing image. Please try again.', 'error');
     }
+}
+
+async function performOCR(imageFile) {
+    try {
+        const result = await Tesseract.recognize(imageFile, 'eng', {
+            logger: m => console.log(m)
+        });
+        return result.data.text;
+    } catch (error) {
+        console.error('Error during OCR:', error);
+        throw error;
+    }
+}
+
+async function sendToOllamaController(text) {
+    try {
+        const response = await fetch('/api/ollama/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: text }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error sending data to OllamaController:', error);
+        throw error;
+    }
+}
+
+function handleOllamaResponse(data) {
+    console.log('Response from OllamaController:', data);
+    showEditableForm(data);
+}
+
+function showEditableForm(data) {
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+
+    Swal.fire({
+        title: 'Edit Receipt Details',
+        html: `
+            <input id="swal-input-store" class="swal2-input" placeholder="Store" value="${data.store || ''}">
+            <input id="swal-input-date" class="swal2-input" type="date" value="${data.date || today}">
+            <input id="swal-input-total" class="swal2-input" type="number" step="0.01" placeholder="Total" value="${data.total || ''}">
+            <div id="purchases-container"></div>
+            <button id="add-purchase-btn" class="swal2-confirm swal2-styled" type="button">Add Purchase</button>
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        cancelButtonText: 'Cancel',
+        didOpen: () => {
+            displayPurchases(data.purchases || []);
+            document.getElementById('add-purchase-btn').addEventListener('click', addPurchaseField);
+        },
+        preConfirm: () => {
+            return {
+                store: document.getElementById('swal-input-store').value,
+                date: document.getElementById('swal-input-date').value,
+                total: parseFloat(document.getElementById('swal-input-total').value),
+                purchases: getPurchasesFromForm()
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            addNewReceipt(result.value);
+        }
+    });
+}
+
+function displayPurchases(purchases) {
+    const container = document.getElementById('purchases-container');
+    container.innerHTML = '';
+    purchases.forEach((purchase, index) => {
+        container.innerHTML += `
+            <div class="purchase-entry">
+                <input class="swal2-input purchase-name" placeholder="Product Name" value="${purchase.product_name || ''}">
+                <input class="swal2-input purchase-price" type="number" step="0.01" placeholder="Price" value="${purchase.price || ''}">
+                <button class="swal2-confirm swal2-styled remove-purchase-btn" type="button" data-index="${index}">Remove</button>
+            </div>
+        `;
+    });
+    attachRemovePurchaseListeners();
+}
+
+function attachRemovePurchaseListeners() {
+    document.querySelectorAll('.remove-purchase-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.target.closest('.purchase-entry').remove();
+        });
+    });
+}
+
+function addPurchaseField() {
+    const container = document.getElementById('purchases-container');
+    const newIndex = container.children.length;
+    const newPurchaseHtml = `
+        <div class="purchase-entry">
+            <input class="swal2-input purchase-name" placeholder="Product Name">
+            <input class="swal2-input purchase-price" type="number" step="0.01" placeholder="Price">
+            <button class="swal2-confirm swal2-styled remove-purchase-btn" type="button" data-index="${newIndex}">Remove</button>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', newPurchaseHtml);
+    attachRemovePurchaseListeners();
+}
+
+function getPurchasesFromForm() {
+    const purchases = [];
+    document.querySelectorAll('.purchase-entry').forEach(entry => {
+        const name = entry.querySelector('.purchase-name').value;
+        const price = parseFloat(entry.querySelector('.purchase-price').value);
+        if (name && !isNaN(price)) {
+            purchases.push({ product_name: name, price: price });
+        }
+    });
+    return purchases;
+}
+
+function addNewReceipt(data) {
+    let receiptHistory = JSON.parse(localStorage.getItem('receiptHistory')) || [];
+    receiptHistory.push(data);
+    localStorage.setItem('receiptHistory', JSON.stringify(receiptHistory));
+    updateHistoryDisplay();
+    updateCharts();
+    
+    Swal.fire({
+        title: 'Success!',
+        text: 'The receipt has been added to your history.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+}
+
+function updateHistory(data) {
+    let receiptHistory = JSON.parse(localStorage.getItem('receiptHistory')) || [];
+    receiptHistory.push(data);
+    localStorage.setItem('receiptHistory', JSON.stringify(receiptHistory));
+    updateHistoryDisplay();
+}
+
+function updateHistoryDisplay() {
+    const historyList = document.getElementById('historyList');
+    const receiptHistory = JSON.parse(localStorage.getItem('receiptHistory')) || [];
+    
+    historyList.innerHTML = '';
+    receiptHistory.forEach((receipt, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${receipt.store}: ${receipt.total} ${selectedCurrency} (${receipt.date})`;
+        
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.onclick = () => editReceiptHistoryEntry(index);
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = () => deleteReceiptHistoryEntry(index);
+        
+        li.appendChild(editButton);
+        li.appendChild(deleteButton);
+        historyList.appendChild(li);
+    });
+}
+
+function updateTotalAmount(total) {
+    const overallTotalAmount = document.getElementById('overallTotalAmount');
+    overallTotalAmount.textContent = `Overall Total: ${convertCurrency(total)} ${selectedCurrency}`;
+}
+
+function updateCharts() {
+    updateMonthlyChart();
+    updateWeeklyChart();
+    updateDailyChart();
+    updateStoreChart();
 }
 
 // Function to upload image directly to your API
@@ -1003,8 +1186,11 @@ function updateMonthlyChart() {
     const monthlyData = {};
 
     receiptHistory.forEach(receipt => {
-        const month = receipt.date.substring(0, 7); // YYYY-MM
-        monthlyData[month] = (monthlyData[month] || 0) + convertCurrency(receipt.total);
+        if (receipt && receipt.date) {
+            const month = receipt.date.substring(0, 7); // YYYY-MM
+            const total = parseFloat(receipt.total) || 0;
+            monthlyData[month] = (monthlyData[month] || 0) + convertCurrency(total);
+        }
     });
 
     const labels = Object.keys(monthlyData).sort();
@@ -1308,3 +1494,18 @@ window.addManualItem = function() {
         }
     });
 };
+
+function addNewReceipt(data) {
+    const newReceipt = {
+        store: data.store || 'Unknown Store',
+        date: data.date || new Date().toISOString().split('T')[0], // Use current date if not provided
+        total: parseFloat(data.total) || 0,
+        // ... other properties ...
+    };
+
+    let receiptHistory = JSON.parse(localStorage.getItem('receiptHistory')) || [];
+    receiptHistory.push(newReceipt);
+    localStorage.setItem('receiptHistory', JSON.stringify(receiptHistory));
+    updateHistoryDisplay();
+    updateCharts();
+}
