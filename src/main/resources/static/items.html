@@ -79,6 +79,14 @@
         if (localStorage.getItem('darkMode') === 'true') {
             body.classList.add('dark-mode');
         }
+
+        // Hamburger menu functionality
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active'); // Toggle the 'active' class
+        });
     </script>
 </body>
 </html>
